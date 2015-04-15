@@ -1,13 +1,14 @@
-a379b4fae96e873a11105cf6bc36dddd *DESCRIPTION
+b229cbe40a1a2054afb9280332ff6b21 *CHANGELOG
+349a34cb0be96c170eb227ea7c10b8c5 *DESCRIPTION
 1005ce31ab4ad1f368b3071cfdb4fa1d *LICENSE
 584ce2f4e9e739349e30ecad8f5dea3b *NAMESPACE
 f8b38b500f4f5c6d83c1a23e2dcf5eee *R/bx_download.R
-01330fa63e51775d88493945e6a788e9 *R/bx_extract.R
+c4c78bb4f28a829821e3c3548731460c *R/bx_extract.R
 f0b3f33277b7a60a2097a001b12e54bf *R/bx_search.R
 a3c6abe738994d2d5c0f7a7c7028722f *build/vignette.rds
 2aec5cf70714515a9788fb8b620d7a77 *inst/doc/vignette.R
 172650a1ce0e3f93e72d908c7afce662 *inst/doc/vignette.Rmd
-eec8b42e524fcec2cdace8c3ae67ddfe *inst/doc/vignette.html
+2e47134e11678fe5307a524ca7c23f77 *inst/doc/vignette.html
 d6771e48d55e6c18760b8c92635e0ef6 *man/bx_download.Rd
 a5bcfbed0fb25c87ac8b880f02757818 *man/bx_extract.Rd
 bdfd7ed8d05dcf984a919b9d165f11fb *man/bx_extract_single.Rd
