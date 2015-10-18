@@ -1,8 +1,8 @@
 Package: biorxivr
 Type: Package
 Title: Search and Download Papers from the bioRxiv Preprint Server
-Version: 0.1.1
-Date: 2015-04-15
+Version: 0.1.2
+Date: 2015-10-13
 Authors@R: c(person("Edmund", "Hart", role = c("aut","cre"),
     email = "edmund.m.hart@gmail.com"))
 Maintainer: Edmund Hart <edmund.m.hart@gmail.com>
@@ -13,8 +13,8 @@ License: MIT + file LICENSE
 Depends: XML
 Suggests: knitr
 VignetteBuilder: knitr
-Packaged: 2015-05-28 06:51:10 UTC; edmundhart
+Packaged: 2015-10-17 05:45:32 UTC; edmundhart
 Author: Edmund Hart [aut, cre]
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2015-05-28 10:41:42
+Date/Publication: 2015-10-18 00:58:49
