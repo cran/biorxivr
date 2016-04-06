@@ -1,4 +1,13 @@
-biorxivr 0.1.1 
+biorxivr 0.1.2]3
+==============
+
+BUG FIXES
+
+* Fixed errors in vignette building
+* Fixed bug in getting the maximum number of results when a comma was in the string result
+* Fixed bug where URLs were no longer returning with a full path, just a relative path
+
+biorxivr 0.1.1
 ==============
 
 MINOR IMPROVEMENTS

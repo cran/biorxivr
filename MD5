@@ -1,14 +1,14 @@
-b229cbe40a1a2054afb9280332ff6b21 *CHANGELOG
-f7b2244aa50b43278186d150168d8b34 *DESCRIPTION
+8b0d660c28bdf71150a7d53d0e7a4e5d *CHANGELOG
+fc9244bc4646274113536ce7bb187ea1 *DESCRIPTION
 1005ce31ab4ad1f368b3071cfdb4fa1d *LICENSE
 45c48266e8883bdd6da0a2707742a283 *NAMESPACE
 89b1b71b82b89ab17ef4a716495a0fed *R/bx_download.R
 d650d801e27a525962ab3b76dabd7696 *R/bx_extract.R
-754c2108301832b9057ccb5aa1414e69 *R/bx_search.R
-a3c6abe738994d2d5c0f7a7c7028722f *build/vignette.rds
+dc74c73534bcda0580fac5ea339cd646 *R/bx_search.R
+b84736c168566151433f0dba7f676f56 *build/vignette.rds
 d3ced0a8345d7a5e7dbb0eb87169d5db *inst/doc/vignette.R
 b66e7c55bcd26da119a173b829b5af23 *inst/doc/vignette.Rmd
-7acaea7f5c92dfe715a4306b8a7ed9e4 *inst/doc/vignette.html
+81b791a62f0ec3ba8c6e879943c10ba4 *inst/doc/vignette.html
 f67d484b03910d1da08ea15c2b390e1f *man/bx_download.Rd
 27fa5a1d9d6bff25a7def50fd47e52bc *man/bx_extract.Rd
 bb7ec66abb191ac4f1ad64fdbbac20fc *man/bx_extract_single.Rd
@@ -16,4 +16,5 @@ bb7ec66abb191ac4f1ad64fdbbac20fc *man/bx_extract_single.Rd
 02a47a82937159a59ff9ab9528ab74d9 *man/plot.biorxiv_paper.Rd
 80c3a13a58d3f5c91135cea660e33645 *man/print.summary.biorxiv_search.Rd
 936980e55eba9d855d53e3a87422e034 *man/summary.biorxiv_search.Rd
+a227105564ffd0dd3bd6701677283e6c *vignettes/index.Rmd
 b66e7c55bcd26da119a173b829b5af23 *vignettes/vignette.Rmd

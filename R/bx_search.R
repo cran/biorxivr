@@ -22,6 +22,8 @@ bx_search <- function(query, limit = 10){
   ## Get total number of results possible
   ## Be careful, this may be a fragile way to extract the information, because it just relies on H1 from the header
   maxRes <- xpathApply(pgRes,"//h1",xmlValue)
+  ### Remove Commas
+  maxRes <- gsub(",", "", maxRes, fixed = TRUE) 
   maxRes <- as.numeric(regmatches(maxRes[[1]],regexpr('?[0-9]+' ,maxRes[[1]])))
   
   ## Handle a situation with no results
@@ -38,7 +40,8 @@ bx_search <- function(query, limit = 10){
     lastPg <- as.numeric(strsplit(xmlGetAttr(pgCtLst[[lastIndex]],"href"),"=")[[1]][2])
   }
   ## Get first round of URL's 
-  ftURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="http://www.biorxiv.org/content/early",value=T))
+  ftURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="/content/early",value=T))
+  ftURL <- sapply(ftURL,function(x){return(paste("http://www.biorxiv.org",x,sep=""))})
   
   ### Adjust for limits
   
@@ -53,7 +56,8 @@ bx_search <- function(query, limit = 10){
       URL <- paste(base,URLencode(query),page,i,sep="") 
       pgRes <- htmlParse(URL)
       
-      tmpURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="http://www.biorxiv.org/content/early",value=T))
+      tmpURL <-  unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="/content/early",value=T))
+      tmpURL <- sapply(tmpURL,function(x){return(paste("http://www.biorxiv.org",x,sep=""))})
       ftURL <- c(ftURL,tmpURL)
     }
   } 
