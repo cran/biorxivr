@@ -7,12 +7,16 @@
 bx_search(query, limit = 10)
 }
 \arguments{
-\item{query}{the terms to search for in biorxiv}
-
-\item{limit}{the number of results to return}
+\item{query}{The terms to search for in biorxiv.}
+\item{limit}{The number of results to return.}
 }
 \value{
-a list with the following elements: a vector of URL's for bioRxiv papers from the search terms,and the maximum number of results
+A list with the following elements:
+\item{URL}{The URLs of the biorxiv papers from the search terms.}
+\item{ID}{The IDs of the biorxiv papers from the search terms.}
+\item{found}{The total number of papers found for the query.}
+\item{query}{The query searched on biorixiv.}
+\item{limit}{The number of results to return as set by the user.}
 }
 \description{
 return a list of URLS, IDS and number of results found from search of biorxiv.org
@@ -21,10 +25,6 @@ return a list of URLS, IDS and number of results found from search of biorxiv.or
 This uses the generic search interface, therefore be aware that you'll have to do post download filtering if you want terms in a specific field
 }
 \examples{
-\dontrun{
-  ### Get search results
-  bxEco <- bx_search("ecology",limit=20)
-  summary(bxEco)
-}
+bxEco <- bx_search("ecology",limit=1)
 }
 

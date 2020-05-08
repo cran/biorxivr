@@ -22,7 +22,7 @@ bx_download <- function(bxso, directory, create = TRUE){
   
   for(i in 1:length(bxso$URL)){
     URL <- paste(bxso$URL[i],".full.pdf",sep="") 
-    download.file(URL,destfile = paste(directory,strsplit(bxso$ID[i],"/")[[1]][5],".pdf",sep="") ,method = "auto")
+    download.file(URL,destfile = paste(directory,strsplit(bxso$ID[i],"/")[[1]][2],".pdf",sep="") ,method = "auto")
   }
   
 }

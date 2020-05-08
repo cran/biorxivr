@@ -29,7 +29,9 @@ bx_extract <- function(bxso){
 #'@export
 
 bx_extract_single <- function(bxso_url){
-  pgRes <- htmlParse(bxso_url)
+  
+  xData <- getURL(bxso_url)
+  pgRes <- htmlParse(xData)
   meta.names <- xpathApply(pgRes, "//meta[@name]",xmlGetAttr,"name")
   meta.data <- xpathApply(pgRes, "//meta[@name]",xmlGetAttr,"content")# DC.Contributor"
   names(meta.data) <- unlist(meta.names)
@@ -44,42 +46,22 @@ authors$email <- unname(unlist(meta.data[which(nlist == "citation_author_email")
   paper$DOI <- unname(unlist(meta.data[which(nlist == "DC.Identifier")]))
   paper$fulltext_url <- unname(unlist(meta.data[which(nlist == "citation_pdf_url")]))
 
-  metricRes <- htmlParse(paste(bxso_url,".article-metrics"))
+  xData2 <- getURL(paste(bxso_url,".article-metrics"))
+  metricRes <- htmlParse(xData2)
   ## This returns a value for each element and we'll convert it to a matrix
-  metrics <- unlist(xpathApply(metricRes, "//tbody/tr/td",xmlValue))
+  #metrics <- unlist(xpathApply(metricRes, "//tbody/tr/td",xmlValue))
   ## If there are no metrics, at this point  the metrics dataframe will be null, hence this if statement
-if(!is.null(metrics)){
-  metrics <- data.frame(matrix(metrics,ncol=3,nrow=length(metrics)/3, byrow=T))
-  metrics[,3] <- as.numeric(as.character(metrics[,3]))
-  metrics[,2] <- as.numeric(as.character(metrics[,2]))
-metrics[,1] <- do.call(c,lapply(strsplit(as.character(metrics[,1])," "),function(x) {as.Date(strptime(paste(paste(x,collapse="-"),"01",sep="-"),"%b-%Y-%d"))}))
-  colnames(metrics) <- c("date","Abstract","PDF")
-}
+#if(!is.null(metrics)){
+  #metrics <- data.frame(matrix(metrics,ncol=3,nrow=length(metrics)/3, byrow=T))
+  #metrics[,3] <- as.numeric(as.character(metrics[,3]))
+  #metrics[,2] <- as.numeric(as.character(metrics[,2]))
+#metrics[,1] <- do.call(c,lapply(strsplit(as.character(metrics[,1])," "),function(x) {as.Date(strptime(paste(paste(x,collapse="-"),"01",sep="-"),"%b-%Y-%d"))}))
+  #colnames(metrics) <- c("date","Abstract","PDF")
+#}
   
     
-return(structure(list(authors = authors, paper = paper, metrics = metrics),class = "biorxiv_paper"))
+return(structure(list(authors = authors, paper = paper),#, 
+      #  metrics = metrics)
+       class = "biorxiv_paper"))
 }
 
-
-#' plot metric details for a paper
-#' @description plot a summary of the views a paper has had
-#' @param x the paper to plot a summary of
-#' @param type the data to plot, 'abs' for abstract views, 'dl' for PDF downloads
-#' @param ... extra parameters to pass
-#' @export
-#' @importFrom graphics plot lines
-plot.biorxiv_paper <- function(x,type="abs",...){
-  bxp <- x
-
-  if(is.null(bxp$metrics)){          
-    stop("There are no metrics available for this manuscript")
-  }
-  if(type=="abs"){
-    plot(bxp$metrics$date,bxp$metrics$Abstract,main = "Number of Abstract views",xlab="Date",ylab="Number of views")
-    lines(bxp$metrics$date,bxp$metrics$Abstract)
-  }
-  if(type=="dl"){
-    plot(bxp$metrics$date,bxp$metrics$PDF,main = "Number of PDF downloads",xlab="Date",ylab="Number of downloads")
-    lines(bxp$metrics$date,bxp$metrics$PDF)
-  }
-}

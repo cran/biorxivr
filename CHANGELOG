@@ -1,4 +1,18 @@
-biorxivr 0.1.2]3
+biorxivr 1.0.2
+==============
+
+* Improved the help files and fixed bug in bx_download
+
+biorxivr 0.1.4
+==============
+
+BUG FIXES
+
+* Updated the files for release in CRAN
+* No longer collecting metrics of each paper
+
+
+biorxivr 0.1.2 and 0.1.3
 ==============
 
 BUG FIXES

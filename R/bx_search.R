@@ -14,10 +14,11 @@
 #' @importFrom utils URLencode
 
 bx_search <- function(query, limit = 10){
-  base <- "http://www.biorxiv.org/search/"
+  base <- "https://www.biorxiv.org/search/"
   page <- "?page="
   URL <- paste(base,URLencode(query),page,"0",sep="") 
-  pgRes <- htmlParse(URL)
+  xData <- getURL(URL)
+  pgRes <- htmlParse(xData)
   
   ## Get total number of results possible
   ## Be careful, this may be a fragile way to extract the information, because it just relies on H1 from the header
@@ -32,16 +33,17 @@ bx_search <- function(query, limit = 10){
   }
   ## Get the total number of pages
   pgCtLst  <-  xpathApply(pgRes, "//li/a")
-  lastIndex <- which(unlist(lapply(pgCtLst,function(x){grepl("Last",xmlValue(x))}))==TRUE)
+  lastIndex <- which(unlist(lapply(pgCtLst,function(x){grepl("Add All Citations",xmlValue(x))}))==TRUE)-1
   ## Handle if there is just 1 page of results
   if(identical(lastIndex, integer(0))){
     lastPg <- 1
   } else {
-    lastPg <- as.numeric(strsplit(xmlGetAttr(pgCtLst[[lastIndex]],"href"),"=")[[1]][2])
+    lastPg <- as.numeric(xmlValue(pgCtLst[[lastIndex]]))
+    #lastPg <- as.numeric(strsplit(xmlGetAttr(pgCtLst[[lastIndex]],"href"),"=")[[1]][2])
   }
   ## Get first round of URL's 
-  ftURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="/content/early",value=T))
-  ftURL <- sapply(ftURL,function(x){return(paste("http://www.biorxiv.org",x,sep=""))})
+  ftURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="/content/10",value=T))
+  ftURL <- sapply(ftURL,function(x){return(paste("https://www.biorxiv.org",x,sep=""))})
   
   ### Adjust for limits
   
@@ -54,10 +56,11 @@ bx_search <- function(query, limit = 10){
   if(lastPg > 0){
     for(i in 1:lastPg){
       URL <- paste(base,URLencode(query),page,i,sep="") 
-      pgRes <- htmlParse(URL)
+      xData1<-getURL(URL)
+      pgRes <- htmlParse(xData1)
       
-      tmpURL <-  unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="/content/early",value=T))
-      tmpURL <- sapply(tmpURL,function(x){return(paste("http://www.biorxiv.org",x,sep=""))})
+      tmpURL <-  unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="/content/10",value=T))
+      tmpURL <- sapply(tmpURL,function(x){return(paste("https://www.biorxiv.org",x,sep=""))})
       ftURL <- c(ftURL,tmpURL)
     }
   } 
@@ -67,35 +70,12 @@ bx_search <- function(query, limit = 10){
   ftURL <- as.matrix(ftURL)
   colnames(ftURL) <- "URL"
   IDs <- sapply(ftURL, function(m) {m1 <- strsplit(m,"/")[[1]]
-                paste(m1[which(m1 =="early"):length(m1)],collapse="/")}
+                paste(m1[which(m1 =="10.1101"):length(m1)],collapse="/")}
                 )
   
   bioX <- structure(list(URL = ftURL,ID = unname(IDs), found = maxRes,query=query,limit=limit), class = "biorxiv_search")
   return(bioX)
   
 }
-#' Summary of search results
-#' @description create a summary of search results
-#' @param object the search object to create a summary of
-#' @param ... extra parameters to pass
-#' @export
-#' 
-summary.biorxiv_search <- function(object,...){
-  class(object) <- "summary.bxso"
-  return(object)
-}
-
-#'Print summary results
-#'@description print a summary of search results
-#'@param x the biorxiv search object to print
-#'@param ... extra parameters to the print function
-#'@export
-
-`print.summary.biorxiv_search` <- function(x,...){
-cat("Search term:", x$query,"\n")
-cat("Number of results returned:",x$limit,"\n")
-cat("Number of results found:",x$found,"\n")
-}
-
 
 
